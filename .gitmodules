@@ -1,0 +1,6 @@
+[submodule "src/xqsim"]
+	path = src/xqsim
+	url = https://github.com/SNU-HPCS/XQsim
+[submodule "src/qisim"]
+	path = src/qisim
+	url = https://github.com/SNU-HPCS/QIsim
