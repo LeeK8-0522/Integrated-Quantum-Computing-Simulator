@@ -14,10 +14,8 @@ OUTPUT_QISIM = f'{BASE_DIR}/outputs/qisim'
 OUTPUT_XQSIM = f'{BASE_DIR}/outputs/xqsim'
 FINAL_OUTPUT = f'{BASE_DIR}/outputs/system_results.json'
 
-# 워크로드 정의 (ghz_n3로 변경, num_lq=5)
-INPUT_WORKLOAD = 'ghz_n3'  # num_lq=5로 assert OK
+INPUT_WORKLOAD = 'ghz_n3'  # 하드 코딩하여 워크로드 설정
 
-# XQsim 모듈 경로 추가
 sys.path.append(XQSIM_PATH)
 import unit_stat
 
@@ -51,11 +49,9 @@ except subprocess.CalledProcessError as e:
     print(f"XQsim 실패: {e}")
     exit(1)
 
-# pickle 로드 (unit_stat 지원)
 try:
     with open(f'{OUTPUT_XQSIM}/xqsim_patch_latency.json', 'rb') as f:
         patch_stat = pickle.load(f)
-        # EDU unit_stat_sim에서 activated_cycles 추출 (latency로 가정)
         edu_stat = next((stat for stat in patch_stat if stat.name == "EDU"), None)
         patch_latencies = [edu_stat.activated_cycles] if edu_stat else [100]
 except (FileNotFoundError, ValueError, AttributeError):
